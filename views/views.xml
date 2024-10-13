@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+        <!-- Dev jobs tree view (start)-->
+    <record id="dev_jobs_view_tree" model="ir.ui.view">
+        <field name="name">Dev jobs tree view</field>
+        <field name="model">dev.job</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="job_title" required="True"/>
+                <field name="job_type"/>
+                <field name="company_name"/>
+                <field name="country"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Dev jobs tree view (end)-->
+
+    <!-- Dev jobs form view (start)-->
+    <record id="dev_jobs_view_form" model="ir.ui.view">
+        <field name="name">Dev jobs form view</field>
+        <field name="model">dev.job</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="job_title" required="True"/>
+                            <field name="job_type"/>
+                            <field name="company_name"/>
+                            <field name="company_logo" widget="image" class="oe_avatar"/>
+                            <field name="country"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Dev jobs form view (end)-->
+
+    <!-- Dev jobs action (start)-->
+    <record id="dev_jobs_form" model="ir.actions.act_window">
+        <field name="name">Jobs</field>
+        <field name="res_model">dev.job</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Dev jobs action (end)-->
+</odoo>

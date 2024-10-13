@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <menuitem id="dev_jobs_root_menu_id" name="Dev Jobs" sequence="200"/>
+
+    <menuitem id="dev_jobs_parent_menu_id"
+              name="Jobs"
+              sequence="0"
+              parent="dev_jobs_root_menu_id"
+              />
+
+    <menuitem id="dev_jobs_menu_id"
+              name="Jobs"
+              sequence="0"
+              parent="dev_jobs_parent_menu_id"
+              action="dev_jobs_form"
+              />
+</odoo>

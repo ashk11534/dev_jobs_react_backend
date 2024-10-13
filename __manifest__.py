@@ -1,0 +1,20 @@
+{
+    'name': 'Dev Jobs',
+    'version': '1.0',
+    'summary': 'Dev Jobs React App',
+    'sequence': 200,
+    'description': """Developed by Md. Ashikuzzaman.""",
+    'category': '',
+    'website': '',
+    'depends': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/views_menu.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'application': True,
+    'assets': {},
+    'license': 'LGPL-3',
+}
