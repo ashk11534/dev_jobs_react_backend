@@ -27,8 +27,10 @@
                         <group>
                             <field name="job_title" required="True"/>
                             <field name="job_type"/>
+                            <field name="job_description"/>
                             <field name="company_name"/>
                             <field name="company_logo" widget="image" class="oe_avatar"/>
+                            <field name="company_website_url"/>
                             <field name="country"/>
                         </group>
                     </group>
