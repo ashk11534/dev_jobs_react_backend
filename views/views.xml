@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <odoo>
-        <!-- Dev jobs tree view (start)-->
+    <!-- Dev jobs tree view (start)-->
     <record id="dev_jobs_view_tree" model="ir.ui.view">
         <field name="name">Dev jobs tree view</field>
         <field name="model">dev.job</field>
@@ -47,4 +47,46 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- Dev jobs action (end)-->
+
+    <!-- Job application tree view (start)-->
+    <record id="job_application_view_tree" model="ir.ui.view">
+        <field name="name">Job applications tree view</field>
+        <field name="model">job.application</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="email"/>
+                <field name="cover_letter"/>
+                <field name="resume"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Job application tree view (end)-->
+
+    <!-- Job application form view (start)-->
+    <record id="job_application_view_form" model="ir.ui.view">
+        <field name="name">Job applications form view</field>
+        <field name="model">job.application</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="email" required="True"/>
+                            <field name="cover_letter"/>
+                            <field name="resume"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Job application form view (end)-->
+
+    <!-- Job application action (start)-->
+    <record id="job_application_form" model="ir.actions.act_window">
+        <field name="name">Job applications</field>
+        <field name="res_model">job.application</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Job application action (end)-->
 </odoo>
