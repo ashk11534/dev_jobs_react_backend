@@ -15,4 +15,17 @@
               parent="dev_jobs_parent_menu_id"
               action="dev_jobs_form"
               />
+
+    <menuitem id="job_applications_parent_menu_id"
+              name="Applications"
+              sequence="1"
+              parent="dev_jobs_root_menu_id"
+              />
+
+    <menuitem id="job_applications_menu_id"
+              name="Applications"
+              sequence="0"
+              parent="job_applications_parent_menu_id"
+              action="job_application_form"
+              />
 </odoo>

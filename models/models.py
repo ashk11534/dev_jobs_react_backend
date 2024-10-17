@@ -23,3 +23,13 @@ class DevJob(models.Model):
         formatted_date = date_obj.strftime("%B %d, %Y")
 
         return formatted_date
+
+
+class JobApplication(models.Model):
+    _name = 'job.application'
+    _description = 'job.application'
+    _order = 'id desc'
+
+    email = fields.Char(string='Email')
+    cover_letter = fields.Html(string='Cover letter')
+    resume = fields.Binary(string='Resume')
