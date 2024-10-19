@@ -33,3 +33,4 @@ class JobApplication(models.Model):
     email = fields.Char(string='Email')
     cover_letter = fields.Html(string='Cover letter')
     resume = fields.Binary(string='Resume')
+    job_id = fields.Many2one('dev.job', string='Job ID')
