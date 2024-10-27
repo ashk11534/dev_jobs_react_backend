@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="report_test_sale_id">
+        <t t-call="web.basic_layout">
+
+            <style>
+                p{
+                    margin-bottom: 0;
+                    line-height: 1.7;
+                }
+                    .main-heading, .sub-heading{
+                    text-align: center;
+                }
+
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+            </style>
+
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h5 class="main-heading mb-1">Madol Shasyabhander</h5>
+                    <h5 class="sub-heading mb-4">Category wise sales summary Report</h5>
+                    <h5 t-esc="o.name" class="mb-3"/>
+
+                    <table>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+
+                        <t t-set="row_count" t-value="1"/>
+                        <t t-set="currency" t-value="request.env.company.currency_id.symbol"></t>
+
+                        <t t-foreach="o.order_line" t-as="order_l">
+                            <tr>
+                                <td><t t-esc="row_count"/></td>
+                                <td><t t-esc="order_l.product_template_id.name"/></td>
+                                <td><t t-esc="order_l.product_uom_qty"/></td>
+                                <td><t t-esc="currency + str(order_l.price_unit)"/></td>
+                                <td><t t-esc="currency + str(order_l.price_unit * order_l.product_uom_qty)"/></td>
+                            </tr>
+
+                           <t t-set="row_count" t-value="row_count + 1"/>
+                        </t>
+                        <tr>
+                            <td colspan="4">Total</td>
+                            <td><t t-esc="currency + str(o.amount_total)"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
