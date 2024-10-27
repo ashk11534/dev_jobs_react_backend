@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <record id="dev_job_print_details_id" model="ir.actions.report">
+        <field name="name">Print job details</field>
+        <field name="model">dev.job</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dev_jobs_react_backend.job_details_id</field>
+        <field name="report_file">dev_jobs_react_backend.job_details_id</field>
+        <field name="binding_model_id" ref="model_dev_job"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

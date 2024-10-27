@@ -1,6 +1,7 @@
 from odoo import fields, models, api
 from datetime import datetime
 
+
 class DevJob(models.Model):
     _name = 'dev.job'
     _description = 'dev.job'
@@ -33,4 +34,12 @@ class JobApplication(models.Model):
     email = fields.Char(string='Email')
     cover_letter = fields.Html(string='Cover letter')
     resume = fields.Binary(string='Resume')
+
+
+class SaleOrderInherit(models.Model):
+    _inherit = 'sale.order'
+
+    def print_test_sale(self):
+        return self.env.ref('dev_jobs_react_backend.dev_jobs_sale_report').report_action(self)
+
     job_id = fields.Many2one('dev.job', string='Job ID')

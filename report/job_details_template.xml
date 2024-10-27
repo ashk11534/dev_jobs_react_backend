@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="job_details_id">
+        <t t-call="web.basic_layout">
+            <style>
+                p{
+                margin-bottom: 0;
+                line-height: 1.7;
+                }
+
+                .job-card{
+                width: 40%;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 0 auto;
+                }
+
+                .company-logo{
+                width: 50%;
+                height: 150px;
+                border-radius: 5px;
+                }
+            </style>
+
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="job-card">
+                        <img class="company-logo mb-2"
+                             t-att-src="'data:image/png;base64,%s' % o.company_logo.decode('utf-8') if o.company_logo else '/web/static/img/placeholder.png'"/>
+                        <p>
+                            <t t-esc="o.company_name"/>
+                        </p>
+                        <p>
+                            <t t-esc="o.job_title"/>
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
