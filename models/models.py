@@ -41,3 +41,5 @@ class SaleOrderInherit(models.Model):
 
     def print_test_sale(self):
         return self.env.ref('dev_jobs_react_backend.dev_jobs_sale_report').report_action(self)
+
+    job_id = fields.Many2one('dev.job', string='Job ID')

@@ -57,6 +57,7 @@
                 <field name="email"/>
                 <field name="cover_letter"/>
                 <field name="resume"/>
+                <field name="job_id"/>
             </tree>
         </field>
     </record>
@@ -74,6 +75,7 @@
                             <field name="email" required="True"/>
                             <field name="cover_letter"/>
                             <field name="resume"/>
+                            <field name="job_id"/>
                         </group>
                     </group>
                 </sheet>
