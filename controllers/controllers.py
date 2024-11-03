@@ -29,7 +29,6 @@ class FetchJobs(http.Controller):
 
         return req.make_response(json.dumps({'code': 200, 'dev_jobs': jobs_list}), headers=[
             ('Content-Type', 'application/json'),
-            ('Access-Control-Allow-Origin', '*'),
             ('Access-Control-Allow-Methods', 'GET, OPTIONS'),
         ])
 
@@ -45,7 +44,7 @@ class FetchJobs(http.Controller):
             'job_title': job_obj.job_title,
             'created_date': job_obj.format_created_date(),
             'job_type': job_obj.job_type,
-            'job_description': BeautifulSoup(job_obj.job_description, 'html.parser').get_text(),
+            'job_description': BeautifulSoup(job_obj.job_description, 'html.parser').get_text() if job_obj.job_description else '',
             'company_name': job_obj.company_name,
             'company_logo': company_logo if company_logo else '',
             'company_website_url': job_obj.company_website_url,
@@ -54,7 +53,6 @@ class FetchJobs(http.Controller):
 
         return req.make_response(json.dumps({'code': 200, 'job_data': job_data}), headers=[
             ('Content-Type', 'application/json'),
-            ('Access-Control-Allow-Origin', '*'),
             ('Access-Control-Allow-Methods', 'GET, OPTIONS')
         ])
 
@@ -64,16 +62,17 @@ class FetchJobs(http.Controller):
         email = form_data.get('email').strip() if form_data.get('email') else ''
         cover_letter = form_data.get('coverLetter').strip() if form_data.get('coverLetter') else ''
         resume = base64.b64encode(req.httprequest.files.get('resume').read()) if req.httprequest.files.get('resume') else None
+        job_id = int(form_data.get('jobId')) if form_data.get('jobId') else None
 
         req.env['job.application'].sudo().create({
             'email': email,
             'cover_letter': cover_letter,
-            'resume': resume
+            'resume': resume,
+            'job_id': job_id
         })
 
         return req.make_response(json.dumps({'code': 200}), headers=[
             ('Content-Type', 'application/json'),
-            ('Access-Control-Allow-Origin', '*'),
             ('Access-Control-Allow-Methods', 'POST, OPTIONS')
         ])
 
@@ -99,7 +98,7 @@ class FetchJobs(http.Controller):
         if fullTime:
             query_list.append(('job_type', '=', fullTime))
 
-        if len(query_list) == 1 or len(query_list) == 2:
+        if (len(query_list) == 1 or len(query_list) == 2 or len(query_list) == 3) and not title:
             query_list.remove('|')
 
         dev_jobs = req.env['dev.job'].sudo().search(query_list)
@@ -124,7 +123,6 @@ class FetchJobs(http.Controller):
 
         return req.make_response(json.dumps({'code': 200, 'dev_jobs': jobs_list}), headers=[
             ('Content-Type', 'application/json'),
-            ('Access-Control-Allow-Origin', '*'),
             ('Access-Control-Allow-Methods', 'POST, OPTIONS')
         ])
 
