@@ -2,6 +2,8 @@ from odoo import http
 from odoo.http import request as req
 import json, base64
 from bs4 import BeautifulSoup
+from odoo import models, api
+import cx_Oracle
 
 class FetchJobs(http.Controller):
 
@@ -123,3 +125,134 @@ class FetchJobs(http.Controller):
             ('Content-Type', 'application/json'),
             ('Access-Control-Allow-Methods', 'POST, OPTIONS')
         ])
+
+def connect_to_oracle():
+    dsn = cx_Oracle.makedsn('localhost', '1521', sid='XE')
+    user = 'ashik'
+    password = 'root'
+
+    connection = cx_Oracle.connect(user, password, dsn)
+    cursor = connection.cursor()
+
+    return connection, cursor
+
+
+class OracleConnector(http.Controller):
+    @http.route('/retrieve-data-from-oracle', type='http', auth='public')
+    def retrieve_data_from_oracle(self):
+
+        connection = cursor = None
+
+        try:
+            connection, cursor = connect_to_oracle()
+
+            cursor.execute("SELECT * FROM EMP")
+            rows = cursor.fetchall()
+
+            for row in rows:
+                # Perform desired operations with Odoo models or data processing here
+                print(row[0], row[1])
+
+        except cx_Oracle.DatabaseError as e:
+            print("There was an error connecting to the Oracle database:", e)
+
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+
+    @http.route('/create-a-new-table', type='http', auth='public')
+    def create_a_new_table(self):
+
+        connection = cursor = None
+
+        try:
+            connection, cursor = connect_to_oracle()
+
+            cursor.execute("""CREATE TABLE student (
+                student_id NUMBER(10) PRIMARY KEY,
+                name VARCHAR2(50),
+                age NUMBER(3)
+            )""")
+
+        except cx_Oracle.DatabaseError as e:
+            print('There was an error connecting to the oracle database', e)
+
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+
+    @http.route('/insert-data-into-student-table', type='http', auth='public')
+    def insert_data_into_student_table(self):
+
+        connection = cursor = None
+
+        try:
+            connection, cursor = connect_to_oracle()
+
+            cursor.execute("""INSERT INTO student 
+            (student_id, name, age)
+            VALUES (2, 'Joy', 26)
+            """)
+
+            connection.commit()
+
+        except cx_Oracle.DatabaseError as e:
+            print('There was an error connecting to the Oracle database', e)
+
+        finally:
+
+            if cursor:
+                cursor.close()
+
+            if connection:
+                connection.close()
+
+    @http.route('/delete-from-table', type='http', auth='public')
+    def delete_from_table(self):
+        connection = cursor = None
+
+        try:
+            connection, cursor = connect_to_oracle()
+
+            cursor.execute("""DELETE FROM student WHERE student_id=1""")
+
+            connection.commit()
+
+        except cx_Oracle.DatabaseError as e:
+            print('There was an error connecting to the Oracle database', e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+            if connection:
+                connection.close()
+
+
+    @http.route('/update-a-record', type='http', auth='public')
+    def update_a_record(self):
+        connection = cursor = None
+
+        try:
+            connection, cursor = connect_to_oracle()
+
+            cursor.execute("""UPDATE student SET name='Shamiul', age=29 WHERE student_id=2""")
+
+            connection.commit()
+
+        except cx_Oracle.DatabaseError as e:
+            print('There was an error connecting to the Oracle database', e)
+
+        finally:
+            if cursor:
+                cursor.close()
+
+            if connection:
+                connection.close()
+
+
+
